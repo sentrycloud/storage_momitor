@@ -1,0 +1,10 @@
+log:
+  path: logs/storageServer.log
+  level: info
+  max_size: 200
+  max_backup: 10
+redis:
+  -
+    server_addr: 127.0.0.1:6379
+    password: foobar
+    collect_interval: 20 # unit seconds
