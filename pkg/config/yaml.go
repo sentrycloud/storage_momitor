@@ -12,10 +12,19 @@ var ServerConfig StorageServerConfig
 type StorageServerConfig struct {
 	Log   newlog.LogConfig
 	Redis []RedisConfig
+	MySQL []MySQLConfig
 }
 
 type RedisConfig struct {
 	ServerAddr      string `yaml:"server_addr"`
+	Password        string `yaml:"password"`
+	CollectInterval int64  `yaml:"collect_interval"`
+}
+
+type MySQLConfig struct {
+	Host            string `yaml:"host"`
+	Port            int    `yaml:"port"`
+	Username        string `yaml:"username"`
 	Password        string `yaml:"password"`
 	CollectInterval int64  `yaml:"collect_interval"`
 }

@@ -3,6 +3,7 @@ module github.com/sentrycloud/storage_momitor
 go 1.21
 
 require (
+	github.com/go-sql-driver/mysql v1.7.0
 	github.com/redis/go-redis/v9 v9.4.0
 	github.com/sentrycloud/sentry v0.0.2
 	github.com/sentrycloud/sentry-sdk-go v1.1.0

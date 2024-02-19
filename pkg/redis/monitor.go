@@ -7,6 +7,7 @@ import (
 	"github.com/sentrycloud/sentry-sdk-go"
 	"github.com/sentrycloud/sentry/pkg/newlog"
 	"github.com/sentrycloud/storage_momitor/pkg/config"
+	"github.com/sentrycloud/storage_momitor/pkg/util"
 	"strconv"
 	"strings"
 	"time"
@@ -34,7 +35,7 @@ func monitor(redisConfig config.RedisConfig) {
 	memCollector := sentry.GetCollector("redis_mem", tags, sentry.Sum, redisConfig.CollectInterval)
 	memPercentCollector := sentry.GetCollector("redis_mem_percent", tags, sentry.Sum, redisConfig.CollectInterval)
 	clientConnCollector := sentry.GetCollector("redis_conn", tags, sentry.Sum, redisConfig.CollectInterval)
-	keysCollecotr := sentry.GetCollector("redis_keys", tags, sentry.Sum, redisConfig.CollectInterval)
+	keysCollector := sentry.GetCollector("redis_keys", tags, sentry.Sum, redisConfig.CollectInterval)
 	hitRateCollector := sentry.GetCollector("redis_hit_rate", tags, sentry.Sum, redisConfig.CollectInterval)
 
 	for {
@@ -55,14 +56,10 @@ func monitor(redisConfig config.RedisConfig) {
 
 			collectMemPercent(infoMap, memPercentCollector, startTimestamp)
 			collectHitRate(infoMap, hitRateCollector, startTimestamp)
-			collectKeys(infoMap, keysCollecotr, startTimestamp)
+			collectKeys(infoMap, keysCollector, startTimestamp)
 		}
 
-		costTime := time.Now().Sub(startTime)
-		sleepTime := time.Duration(redisConfig.CollectInterval)*time.Second - costTime
-		if sleepTime > 0 {
-			time.Sleep(sleepTime)
-		}
+		util.SleepInterval(redisConfig.CollectInterval, startTime)
 	}
 }
 

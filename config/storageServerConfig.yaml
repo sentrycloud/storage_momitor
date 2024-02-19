@@ -1,10 +1,21 @@
+# log config
 log:
   path: logs/storageServer.log
   level: info
   max_size: 200
   max_backup: 10
+
+# redis config: each redis instance is an item in the array
 redis:
   -
     server_addr: 127.0.0.1:6379
     password: foobar
     collect_interval: 20 # unit seconds
+
+mysql:
+  -
+    host: 127.0.0.1
+    port: 3306
+    username: sentry
+    password: 123456
+    collect_interval: 30 # unit seconds
